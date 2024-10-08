@@ -1,7 +1,7 @@
-const AuthConstants = require("./auth");
 const ErrorCodes = require("./errorCodes");
+const ErrorMessages = require("./erroMessages");
 
 module.exports = {
-  AuthConstants,
+  ErrorMessages,
   ErrorCodes,
 };

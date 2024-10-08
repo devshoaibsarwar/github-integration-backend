@@ -19,7 +19,7 @@ class Token {
 
   static verifyToken(token) {
     try {
-      const decodedToken = jsonwebtoken.verify(token, config.secretKey);
+      const decodedToken = jsonwebtoken.verify(token, process.env.SECRET_KEY);
 
       return decodedToken;
     } catch (err) {

@@ -1,4 +1,4 @@
-const { ErrorCodes, AuthConstants } = require("../../constants");
+const { ErrorMessages } = require("../../constants");
 
 const AuthManager = require("./AuthManager");
 
@@ -18,9 +18,9 @@ class AuthController {
 
       return res.status(err.code).json({
         success: false,
-        message: err.meta.reportError
+        message: err.meta?.reportError
           ? err.message
-          : AuthConstants.MESSAGES.SOMETHING_WENT_WRONG,
+          : ErrorMessages.MESSAGES.SOMETHING_WENT_WRONG,
       });
     }
   }

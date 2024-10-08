@@ -31,6 +31,30 @@ class GithubService {
       { Authorization: `Bearer ${accessToken}` }
     );
   }
+
+  static revokeUserAccess(accessToken) {
+    console.log(accessToken);
+    return ExternalAPI.deleteRequest(
+      `${this.GITHUB_API_URL}/applications/${this.GITHUB_CLIENT_ID}/grant`,
+      {
+        headers: {
+          ...this.generateBasicAuthHeaders(),
+        },
+        data: {
+          access_token: accessToken,
+        },
+      }
+    );
+  }
+
+  static generateBasicAuthHeaders() {
+    return {
+      Authorization: `Basic ${Buffer.from(
+        this.GITHUB_CLIENT_ID + ":" + this.GITHUB_CLIENT_SECRET
+      ).toString("base64")}`,
+      Accept: "application/vnd.github+json",
+    };
+  }
 }
 
 module.exports = GithubService;

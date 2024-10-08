@@ -9,8 +9,8 @@ class ExternalAPI {
     return axios.post(url, { ...data }, { headers });
   }
 
-  static deleteRequest(url, data, headers = {}) {
-    return axios.delete(url, { ...data }, { headers });
+  static deleteRequest(url, config) {
+    return axios.delete(url, config);
   }
 }
 

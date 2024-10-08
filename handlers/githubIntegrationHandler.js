@@ -12,8 +12,8 @@ class GithubIntegrationHandler {
     return newUser.save();
   }
 
-  static getUserDetails(options = {}) {
-    return GithubIntegration.findOne(options);
+  static getUserDetails(filter = {}) {
+    return GithubIntegration.findOne(filter);
   }
 
   static deleteUser(userId) {

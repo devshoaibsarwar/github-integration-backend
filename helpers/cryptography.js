@@ -2,15 +2,15 @@ const crypto = require("crypto");
 
 class Crypotgraphy {
   static algorithm = "aes-256-cbc";
-  static key = crypto.randomBytes(32);
+  static key = crypto
+    .createHash("sha512")
+    .update("secret_key")
+    .digest("hex")
+    .substring(0, 32);
   static iv = crypto.randomBytes(16);
 
   static encrypt(text) {
-    let cipher = crypto.createCipheriv(
-      this.algorithm,
-      Buffer.from(this.key),
-      this.iv
-    );
+    let cipher = crypto.createCipheriv(this.algorithm, this.key, this.iv);
     let encrypted = cipher.update(text);
     encrypted = Buffer.concat([encrypted, cipher.final()]);
     return {
@@ -22,11 +22,7 @@ class Crypotgraphy {
   static decrypt(text) {
     let iv = Buffer.from(text.iv, "hex");
     let encryptedText = Buffer.from(text.encryptedData, "hex");
-    let decipher = crypto.createDecipheriv(
-      this.algorithm,
-      Buffer.from(this.key),
-      iv
-    );
+    let decipher = crypto.createDecipheriv(this.algorithm, this.key, iv);
     let decrypted = decipher.update(encryptedText);
     decrypted = Buffer.concat([decrypted, decipher.final()]);
     return decrypted.toString();
