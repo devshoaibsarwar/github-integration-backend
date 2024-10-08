@@ -21,7 +21,6 @@ class Authentication {
 
       token = token[1];
       const decoded = Token.verifyToken(token);
-      console.log(decoded, ":: decoded token");
 
       if (!decoded || !decoded._id || !decoded.encryptedToken) {
         throw new Exception(
@@ -53,7 +52,6 @@ class Authentication {
 
       next();
     } catch (error) {
-      console.log(error);
       return res.status(ErrorCodes.UNAUTHORIZED).json({
         message: ErrorMessages.MESSAGES.INVALID_AUTHENTICATION_TOKEN,
       });

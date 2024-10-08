@@ -6,7 +6,6 @@ class GithubIntegrationController {
   static async getUserDetails(req, res) {
     try {
       const user = await GithubIntegrationManager.getUser(req.user);
-      console.log(user, ":: user");
       res.json({
         success: true,
         data: user,
@@ -28,7 +27,6 @@ class GithubIntegrationController {
 
   static async deleteUserDetails(req, res) {
     try {
-      console.log(req.user, ":: req.user");
       const user = await GithubIntegrationManager.delete(req.user);
 
       res.json({

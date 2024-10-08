@@ -4,7 +4,6 @@ class MongoDbClient {
   static async connect() {
     return new Promise((resolve, reject) => {
       const connectionString = process.env.MONGO_URI;
-      console.log("Connection string::", connectionString);
 
       mongoose.connect(connectionString, {
         useNewUrlParser: true,

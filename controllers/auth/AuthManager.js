@@ -4,7 +4,7 @@ const {
 } = require("../../handlers");
 const { Exception, Token } = require("../../helpers");
 const GithubService = require("../../services/github");
-const RepositoryUtils = require("../../utils/repositories");
+const RepositoryUtils = require("../../utils/RepositoryUtils");
 class AuthManager {
   static async signUp(githubCode) {
     const response = await GithubService.authenticateOAuth(githubCode);

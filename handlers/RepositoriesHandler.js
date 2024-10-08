@@ -1,5 +1,5 @@
 const { default: mongoose } = require("mongoose");
-const Repository = require("../models/repository");
+const Repository = require("../models/Repository");
 
 class RepositoriesHandler {
   static getRepositories({ userId, page = 1, pageSize = 5 }) {
@@ -18,7 +18,6 @@ class RepositoriesHandler {
   }
 
   static addRepositories(repos) {
-    console.log(repos);
     return Repository.insertMany(repos);
   }
 

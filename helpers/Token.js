@@ -1,5 +1,5 @@
 const jsonwebtoken = require("jsonwebtoken");
-const Crypotgraphy = require("./cryptography");
+const Crypotgraphy = require("./Cryptography");
 
 class Token {
   static getAccessToken(user) {

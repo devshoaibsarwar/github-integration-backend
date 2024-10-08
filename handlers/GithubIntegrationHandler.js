@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-// const { default: mongoose } = require("mongoose");
-const GithubIntegration = require("../models/githubIntegration");
+const GithubIntegration = require("../models/GithubIntegration");
 
 class GithubIntegrationHandler {
   static addNewUser(user) {

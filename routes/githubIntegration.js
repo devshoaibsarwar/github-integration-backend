@@ -1,5 +1,5 @@
 const express = require("express");
-const Authentication = require("../middlewares/authentication");
+const Authentication = require("../middlewares/Authentication");
 const GithubIntegrationController = require("../controllers/githubIntegration/GithubIntegrationController");
 const router = express.Router();
 

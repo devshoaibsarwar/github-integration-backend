@@ -8,7 +8,6 @@ class AuthController {
       const { code } = req.body || {};
 
       const user = await AuthManager.signUp(code);
-      console.log(user);
       res.json({
         success: true,
         data: user,
