@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const http = require("http");
+const logger = require("morgan");
 
 const routes = require("./routes");
 
@@ -12,6 +13,7 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(logger("dev"));
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
