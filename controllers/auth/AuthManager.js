@@ -1,6 +1,10 @@
-const { GithubIntegrationHandler } = require("../../handlers");
+const {
+  GithubIntegrationHandler,
+  RepositoriesHandler,
+} = require("../../handlers");
 const { Exception, Token } = require("../../helpers");
 const GithubService = require("../../services/github");
+const RepositoryUtils = require("../../utils/repositories");
 class AuthManager {
   static async signUp(githubCode) {
     const response = await GithubService.authenticateOAuth(githubCode);
@@ -25,6 +29,17 @@ class AuthManager {
         name,
       });
     }
+
+    const { data: repos } = await GithubService.getUserRepositories(
+      name,
+      result.access_token
+    );
+
+    const transformedRepos = RepositoryUtils.transformRepositories(
+      repos,
+      userId
+    );
+    await RepositoriesHandler.addRepositories(transformedRepos);
 
     const accessToken = Token.getAccessToken({
       _id: user._id,
