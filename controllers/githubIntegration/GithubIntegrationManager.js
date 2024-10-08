@@ -1,4 +1,8 @@
-const { GithubIntegrationHandler, UserRepoHandler } = require("../../handlers");
+const {
+  GithubIntegrationHandler,
+  UserRepoHandler,
+  RepositoriesHandler,
+} = require("../../handlers");
 const GithubService = require("../../services/github");
 
 class GithubIntegrationManager {
@@ -10,6 +14,7 @@ class GithubIntegrationManager {
 
   static async delete(user) {
     await GithubService.revokeUserAccess(user.token);
+    await RepositoriesHandler.deleteRepositoryByUserId(user.userId);
     return GithubIntegrationHandler.deleteUser(user._id);
   }
 }
