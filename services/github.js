@@ -32,20 +32,6 @@ class GithubService {
     );
   }
 
-  static revokeUserAccess(accessToken) {
-    return ExternalAPI.deleteRequest(
-      `${this.GITHUB_API_URL}/applications/${this.GITHUB_CLIENT_ID}/grant`,
-      {
-        headers: {
-          ...this.generateBasicAuthHeaders(),
-        },
-        data: {
-          access_token: accessToken,
-        },
-      }
-    );
-  }
-
   static getUserRepositories(username, accessToken) {
     return ExternalAPI.getRequest(
       `${this.GITHUB_API_URL}/users/${username}/repos`,

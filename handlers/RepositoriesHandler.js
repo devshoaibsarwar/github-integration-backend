@@ -6,7 +6,31 @@ class RepositoriesHandler {
     const repoDetailAggregate = Repository.aggregate([
       {
         $match: {
-          userId,
+          userId: userId,
+        },
+      },
+      {
+        $addFields: {
+          repoIdString: { $toString: '$_id' }, 
+        },
+      },
+      {
+        $lookup: {
+          from: "user-repositories",
+          localField: "repoIdString",
+          foreignField: "repoId",
+          as: "userRepoDetails",
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          description: 1,
+          url: 1,
+          username: 1,
+          isIncluded: 1,
+          userRepoDetails: 1,
         },
       },
     ]);
@@ -15,6 +39,13 @@ class RepositoriesHandler {
       page,
       limit: pageSize,
     });
+  }
+
+  static update(id, option) {
+    return Repository.findOneAndUpdate(
+      { _id: new mongoose.Types.ObjectId(id) },
+      option
+    );
   }
 
   static addRepositories(repos) {

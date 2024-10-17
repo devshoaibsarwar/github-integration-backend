@@ -8,5 +8,7 @@ router.get(
   Authentication.authenticate,
   RepositoryController.fetchRepositories
 );
+router.put('/:id', Authentication.authenticate, RepositoryController.addRepositoriesDetail);
+router.get('/details', Authentication.authenticate, RepositoryController.fetchRepositoriesDetail);
 
 module.exports = router;

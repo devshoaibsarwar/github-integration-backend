@@ -42,4 +42,8 @@ const startServer = async () => {
 
 app.use("/", routes);
 
+app.on('uncaughtException', (error) => {
+  console.log("[UNCAUGHT EXCEPTION]:: Uncaught exception occurs", error)
+});
+
 startServer();

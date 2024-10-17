@@ -28,6 +28,9 @@ const repositoriesSchema = mongoose.Schema(
     username: {
       type: String,
     },
+    isIncluded: {
+      type: Boolean,
+    },
   },
   { timestamps: true }
 );

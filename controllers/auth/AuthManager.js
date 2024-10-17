@@ -4,8 +4,9 @@ const {
 } = require("../../handlers");
 const { Exception, Token } = require("../../helpers");
 const GithubService = require("../../services/github");
+const PaginationUtil = require("../../utils/PaginationUtil");
 const RepositoryUtils = require("../../utils/RepositoryUtils");
-class AuthManager {
+class AuthManager extends PaginationUtil {
   static async signUp(githubCode) {
     const response = await GithubService.authenticateOAuth(githubCode);
 
@@ -23,6 +24,16 @@ class AuthManager {
 
     let user = await GithubIntegrationHandler.getUserDetails({ userId });
 
+    const organizations = await this.fetchPaginatedData(`${process.env.GITHUB_API_URL}/user/orgs`, { Authorization: `Bearer ${result.access_token}`})
+
+    let orgRepositories = []
+
+    for (const organization of organizations) {
+      const repositoryList = await this.fetchPaginatedData(`${process.env.GITHUB_API_URL}/orgs/${organization.login}/repos`, { Authorization: `Bearer ${result.access_token}`})
+
+      orgRepositories.push(...repositoryList);
+    }
+
     if (!user) {
       user = await GithubIntegrationHandler.addNewUser({
         userId,
@@ -36,7 +47,7 @@ class AuthManager {
     );
 
     const transformedRepos = RepositoryUtils.transformRepositories(
-      repos,
+      [...repos, ...orgRepositories],
       userId
     );
     await RepositoriesHandler.addRepositories(transformedRepos);
