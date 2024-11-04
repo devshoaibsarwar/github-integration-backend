@@ -1,7 +1,8 @@
+const PaginationUtil = require("../utils/PaginationUtil");
 const ExternalAPI = require("./common");
 require("dotenv").config();
 
-class GithubService {
+class GithubService extends PaginationUtil {
   static GITHUB_AUTH_URL = process.env.GITHUB_AUTH_URL;
   static GITHUB_API_URL = process.env.GITHUB_API_URL;
   static GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
@@ -46,6 +47,35 @@ class GithubService {
       ).toString("base64")}`,
       Accept: "application/vnd.github+json",
     };
+  }
+
+  static async synchronizeRepositoriesDetails(payload) {
+    return Promise.all([
+      this.fetchIssues(payload),
+      this.fetchCommits(payload),
+      this.fetchPullRequest(payload),
+    ]);
+  }
+
+  static fetchIssues({ accesToken, organizationName, repositoryName }) {
+    return this.fetchPaginatedData(
+      `${this.GITHUB_API_URL}/repos/${organizationName}/${repositoryName}/issues`,
+      { Authorization: `Bearer ${accesToken}` }
+    )
+  }
+
+  static fetchCommits({ accesToken, organizationName, repositoryName }) {
+    return this.fetchPaginatedData(
+      `${this.GITHUB_API_URL}/repos/${organizationName}/${repositoryName}/commits`,
+      { Authorization: `Bearer ${accesToken}` }
+    ) 
+  }
+
+  static fetchPullRequest({ accesToken, organizationName, repositoryName }) {
+    return this.fetchPaginatedData(
+      `${this.GITHUB_API_URL}/repos/${organizationName}/${repositoryName}/pulls`,
+      { Authorization: `Bearer ${accesToken}` }
+    )
   }
 }
 

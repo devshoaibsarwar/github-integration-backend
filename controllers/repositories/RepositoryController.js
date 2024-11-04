@@ -8,7 +8,6 @@ class RepositoryController {
       const { id } = req.params;
 
       const { isIncluded } = req.body;
-      console.log('test')
 
       await RepositoryManager.addRepoDetails({ id, isIncluded }, req.user);
 
@@ -28,7 +27,7 @@ class RepositoryController {
           success: false,
           message: err.reportError
             ? err.message
-            : RepositoryConstants.MESSAGES.SOMETHING_WENT_WRONG,
+            : ErrorMessages.MESSAGES.SOMETHING_WENT_WRONG,
         });
     }
   }
@@ -37,7 +36,7 @@ class RepositoryController {
     try {
       const { page, pageSize } = req.query
 
-      const details = await RepositoryManager.fetchDetails({ userId: req.user._id, page, pageSize });
+      const details = await RepositoryManager.fetchRepoDetails({ page, pageSize });
 
       res.json({
         success: true,
@@ -56,7 +55,7 @@ class RepositoryController {
           success: false,
           message: err.reportError
             ? err.message
-            : RepositoryConstants.MESSAGES.SOMETHING_WENT_WRONG,
+            : ErrorMessages.MESSAGES.SOMETHING_WENT_WRONG,
         });
     }
   }

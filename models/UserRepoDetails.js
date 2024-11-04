@@ -7,6 +7,9 @@ const userRepositoriesSchema = mongoose.Schema(
     userId: {
       type: String,
     },
+    username: {
+      type: String,
+    },
     repoId: {
       type: String,
     },

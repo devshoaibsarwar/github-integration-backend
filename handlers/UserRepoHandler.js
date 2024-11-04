@@ -38,10 +38,28 @@ class UserRepoHandler {
     return UserRepoDetails.aggregatePaginate(repoDetailAggregate, { page, limit: pageSize });
   }
 
-  static deleteRepositoryByUserId(userId) {
-    return UserRepoDetails.deleteMany({
-      userId,
-    });
+  static getUserRepos({ page = 1, pageSize = 5 }) {
+    const repoDetailAggregate = UserRepoDetails.aggregate([
+      {
+        $lookup: {
+          from: "repositories",
+          let: { repoIdStr: "$repoId" }, 
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$_id", { $toObjectId: "$$repoIdStr" }]  
+                }
+              }
+            }
+          ],
+          as: "repository"
+        },
+      },
+      { $unwind: { path: "$repository", preserveNullAndEmptyArrays: true } },
+    ]);
+
+    return UserRepoDetails.aggregatePaginate(repoDetailAggregate, { page, limit: pageSize });
   }
 
   static deleteRepository(repoId) {
