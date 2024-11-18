@@ -1,9 +1,9 @@
-const Crypotgraphy = require("./Cryptography");
-const Exception = require("./Exception");
-const Token = require("./Token");
+import Crypotgraphy from "./Cryptography.js";
+import Exception from "./Exception.js";
+import Token from "./Token.js";
 
-module.exports = {
-  Crypotgraphy,
+export {
   Exception,
   Token,
-};
+  Crypotgraphy
+}

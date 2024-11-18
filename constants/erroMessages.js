@@ -7,4 +7,4 @@ const ErrorMessages = Object.freeze({
   },
 });
 
-module.exports = ErrorMessages;
+export default ErrorMessages;

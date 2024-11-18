@@ -1,4 +1,4 @@
-const ExternalAPI = require('../services/common')
+import ExternalAPI from '../services/common.js';
 
 class PaginationUtil {
   static async fetchPaginatedData(url, headers) {
@@ -23,4 +23,4 @@ class PaginationUtil {
   }
 }
 
-module.exports = PaginationUtil;
+export default PaginationUtil;

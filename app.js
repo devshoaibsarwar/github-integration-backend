@@ -1,14 +1,13 @@
-const express = require("express");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const http = require("http");
-const logger = require("morgan");
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import http from "http";
+import logger from "morgan";
+import routes from "./routes/index.js";
+import MongoDbClient from "./database/index.js";
+import dotenv from "dotenv"
 
-const routes = require("./routes");
-
-const MongoDbClient = require("./database");
-
-require("dotenv").config();
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;

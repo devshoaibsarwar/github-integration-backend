@@ -6,4 +6,4 @@ const RepositoryEnum = Object.freeze({
   },
 });
 
-module.exports = RepositoryEnum;
+export default RepositoryEnum;

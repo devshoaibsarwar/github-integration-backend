@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require('mongoose-aggregate-paginate-v2');
+import mongoose from "mongoose";
+
+import mongoosePaginate from 'mongoose-aggregate-paginate-v2';
 
 const userRepositoriesSchema = mongoose.Schema(
   {
@@ -11,6 +12,9 @@ const userRepositoriesSchema = mongoose.Schema(
       type: String,
     },
     repoId: {
+      type: String,
+    },
+    syncedUserId: {
       type: String,
     },
     totalCommits: {
@@ -33,4 +37,4 @@ const userRepositoriesSchema = mongoose.Schema(
 
 userRepositoriesSchema.plugin(mongoosePaginate);
 
-module.exports = mongoose.model("user-repositories", userRepositoriesSchema);
+export default mongoose.model("user-repositories", userRepositoriesSchema);

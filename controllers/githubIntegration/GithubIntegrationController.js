@@ -1,6 +1,5 @@
-const GithubIntegrationManager = require("./GithubIntegrationManager");
-
-const { ErrorCodes, ErrorMessages } = require("../../constants");
+import GithubIntegrationManager from "./GithubIntegrationManager.js";
+import { ErrorCodes, ErrorMessages } from "../../constants/index.js";
 
 class GithubIntegrationController {
   static async getUserDetails(req, res) {
@@ -49,4 +48,4 @@ class GithubIntegrationController {
   }
 }
 
-module.exports = GithubIntegrationController;
+export default GithubIntegrationController;

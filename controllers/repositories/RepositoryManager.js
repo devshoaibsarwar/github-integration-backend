@@ -1,8 +1,8 @@
-const { RepositoriesHandler, UserRepoHandler } = require("../../handlers");
-const { RepositoryEnum } = require("../../constants");
-const PaginationUtil = require("../../utils/PaginationUtil");
-const RepositoryUtils = require("../../utils/RepositoryUtils");
-const GithubService = require("../../services/github");
+import { RepositoriesHandler, UserRepoHandler } from "../../handlers/index.js";
+import { RepositoryEnum } from "../../constants/index.js";
+import PaginationUtil from "../../utils/PaginationUtil.js";
+import RepositoryUtils from "../../utils/RepositoryUtils.js";
+import GithubService from "../../services/github.js";
 
 class RepositoryManager extends PaginationUtil {
   static async fetchRepositories(filter) {
@@ -53,22 +53,22 @@ class RepositoryManager extends PaginationUtil {
       Object.keys(issuesUsers).forEach(user => incrementActivity(user, 'issues', issuesUsers[user]));
       Object.keys(pullUsers).forEach(user => incrementActivity(user, 'prs', pullUsers[user]));
 
-      for (const user of Object.keys(userActivity)) {
-        const { commits, issues, prs, id } = userActivity[user];
+      for (const username of Object.keys(userActivity)) {
+        const { commits, issues, prs, id } = userActivity[username];
 
         await UserRepoHandler.addNewRecord({
           totalIssues: issues,
           totalPRs: prs,
           totalCommits: commits,
+          syncedUserId: user.userId,
           repoId: repository.id,
           userId: id,
-          username: user,
+          username,
           status: RepositoryEnum.STATUS.SYNCED,
         });
       }
 
       console.log("Data synced succesfully", user._id, repository.id);
-
 
     } catch (error) {
       //TODO: notify user about syncing failure here
@@ -85,4 +85,4 @@ class RepositoryManager extends PaginationUtil {
   }
 }
 
-module.exports = RepositoryManager;
+export default RepositoryManager;

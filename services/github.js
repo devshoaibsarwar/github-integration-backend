@@ -1,82 +1,94 @@
-const PaginationUtil = require("../utils/PaginationUtil");
-const ExternalAPI = require("./common");
-require("dotenv").config();
+import { Octokit } from "@octokit/rest";
+import { request } from "@octokit/request";
 
-class GithubService extends PaginationUtil {
-  static GITHUB_AUTH_URL = process.env.GITHUB_AUTH_URL;
-  static GITHUB_API_URL = process.env.GITHUB_API_URL;
-  static GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-  static REDIRECT_URI = process.env.REDIRECT_URI;
-  static GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-
-  static authenticateOAuth(githubCode) {
-    const requestBody = {
-      client_id: this.GITHUB_CLIENT_ID,
-      client_secret: this.GITHUB_CLIENT_SECRET,
-      code: githubCode,
-    };
-
-    return ExternalAPI.postRequest(
-      this.GITHUB_AUTH_URL + "/access_token",
-      requestBody,
+class GithubService {
+  static async authenticateOAuth(githubCode) {
+    const authResponse = await request(
+      "POST https://github.com/login/oauth/access_token",
       {
-        Accept: "application/json",
+        headers: {
+          Accept: "application/json",
+        },
+        client_id: process.env.GITHUB_CLIENT_ID,
+        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        code: githubCode,
       }
     );
+
+    return authResponse;
   }
 
-  static getUserDetails(accessToken) {
-    return ExternalAPI.getRequest(
-      `${this.GITHUB_API_URL}/user`,
-      {},
-      { Authorization: `Bearer ${accessToken}` }
-    );
+  static async getUserDetails(accessToken) {
+    const octokit = new Octokit({ auth: accessToken });
+    const { data } = await octokit.rest.users.getAuthenticated();
+    return data;
   }
 
-  static getUserRepositories(username, accessToken) {
-    return ExternalAPI.getRequest(
-      `${this.GITHUB_API_URL}/users/${username}/repos`,
-      { Authorization: `Bearer ${accessToken}` }
-    );
-  }
-
-  static generateBasicAuthHeaders() {
-    return {
-      Authorization: `Basic ${Buffer.from(
-        this.GITHUB_CLIENT_ID + ":" + this.GITHUB_CLIENT_SECRET
-      ).toString("base64")}`,
-      Accept: "application/vnd.github+json",
-    };
+  static async getUserRepositories(username, accessToken) {
+    const octokit = new Octokit({ auth: accessToken });
+    const data = await octokit.paginate(octokit.rest.repos.listForUser, {
+      username,
+      per_page: 100,
+    });
+    return data;
   }
 
   static async synchronizeRepositoriesDetails(payload) {
     return Promise.all([
       this.fetchIssues(payload),
       this.fetchCommits(payload),
-      this.fetchPullRequest(payload),
+      this.fetchPullRequests(payload),
     ]);
   }
 
-  static fetchIssues({ accesToken, organizationName, repositoryName }) {
-    return this.fetchPaginatedData(
-      `${this.GITHUB_API_URL}/repos/${organizationName}/${repositoryName}/issues`,
-      { Authorization: `Bearer ${accesToken}` }
-    )
+  static async fetchIssues({ accesToken, organizationName, repositoryName }) {
+    try {
+      const octokit = new Octokit({ auth: accesToken });
+      const data = await octokit.paginate(octokit.rest.issues.listForRepo, {
+        owner: organizationName,
+        repo: repositoryName,
+        per_page: 100,
+      });
+      return data;
+    } catch (error) {
+      console.log("Error while fetching issues");
+      throw error;
+    }
   }
 
-  static fetchCommits({ accesToken, organizationName, repositoryName }) {
-    return this.fetchPaginatedData(
-      `${this.GITHUB_API_URL}/repos/${organizationName}/${repositoryName}/commits`,
-      { Authorization: `Bearer ${accesToken}` }
-    ) 
+  static async fetchCommits({ accesToken, organizationName, repositoryName }) {
+    try {
+      const octokit = new Octokit({ auth: accesToken });
+      const data = await octokit.paginate(octokit.rest.repos.listCommits, {
+        owner: organizationName,
+        repo: repositoryName,
+        per_page: 100,
+      });
+      return data;
+    } catch (error) {
+      console.log("Error while fetching issues");
+      throw error;
+    }
   }
 
-  static fetchPullRequest({ accesToken, organizationName, repositoryName }) {
-    return this.fetchPaginatedData(
-      `${this.GITHUB_API_URL}/repos/${organizationName}/${repositoryName}/pulls`,
-      { Authorization: `Bearer ${accesToken}` }
-    )
+  static async fetchPullRequests({
+    accesToken,
+    organizationName,
+    repositoryName,
+  }) {
+    try {
+      const octokit = new Octokit({ auth: accesToken });
+      const data = await octokit.paginate(octokit.rest.pulls.list, {
+        owner: organizationName,
+        repo: repositoryName,
+        per_page: 100,
+      });
+      return data;
+    } catch (error) {
+      console.log("Error while fetching issues");
+      throw error;
+    }
   }
 }
 
-module.exports = GithubService;
+export default GithubService;

@@ -58,4 +58,4 @@ class RepositoryUtils {
   }
 }
 
-module.exports = RepositoryUtils;
+export default RepositoryUtils;

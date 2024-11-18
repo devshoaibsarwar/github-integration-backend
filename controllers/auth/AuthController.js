@@ -1,6 +1,5 @@
-const { ErrorMessages } = require("../../constants");
-
-const AuthManager = require("./AuthManager");
+import { ErrorMessages } from "../../constants/index.js";
+import AuthManager from "./AuthManager.js";
 
 class AuthController {
   static async signUp(req, res) {
@@ -25,4 +24,4 @@ class AuthController {
   }
 }
 
-module.exports = AuthController;
+export default AuthController;

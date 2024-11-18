@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-aggregate-paginate-v2");
+import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-aggregate-paginate-v2";
 
 const repositoriesSchema = mongoose.Schema(
   {
@@ -37,4 +37,4 @@ const repositoriesSchema = mongoose.Schema(
 
 repositoriesSchema.plugin(mongoosePaginate);
 
-module.exports = mongoose.model("repositories", repositoriesSchema);
+export default mongoose.model("repositories", repositoriesSchema);

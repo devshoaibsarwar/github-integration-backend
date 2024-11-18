@@ -1,8 +1,8 @@
-const GithubIntegrationHandler = require("./GithubIntegrationHandler");
-const RepositoriesHandler = require("./RepositoriesHandler");
-const UserRepoHandler = require("./UserRepoHandler");
+import GithubIntegrationHandler from "./GithubIntegrationHandler.js";
+import RepositoriesHandler from "./RepositoriesHandler.js";
+import UserRepoHandler from "./UserRepoHandler.js";
 
-module.exports = {
+export {
   GithubIntegrationHandler,
   RepositoriesHandler,
   UserRepoHandler

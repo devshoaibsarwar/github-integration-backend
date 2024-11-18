@@ -1,6 +1,5 @@
-const { ErrorCodes, ErrorMessages } = require("../../constants");
-
-const RepositoryManager = require("./RepositoryManager");
+import { ErrorCodes, ErrorMessages } from "../../constants/index.js";
+import RepositoryManager from "./RepositoryManager.js";
 
 class RepositoryController {
   static async addRepositoriesDetail(req, res) {
@@ -36,7 +35,7 @@ class RepositoryController {
     try {
       const { page, pageSize } = req.query
 
-      const details = await RepositoryManager.fetchRepoDetails({ page, pageSize });
+      const details = await RepositoryManager.fetchRepoDetails({ page, pageSize, syncedUserId: req.user.userId });
 
       res.json({
         success: true,
@@ -87,4 +86,4 @@ class RepositoryController {
   }
 }
 
-module.exports = RepositoryController;
+export default RepositoryController;

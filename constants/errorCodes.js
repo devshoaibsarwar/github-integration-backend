@@ -7,4 +7,4 @@ const ErrorCodes = Object.freeze({
   INTERNAL_SERVER_ERROR: 500,
 });
 
-module.exports = ErrorCodes;
+export default ErrorCodes;

@@ -1,5 +1,5 @@
-const { default: mongoose } = require("mongoose");
-const Repository = require("../models/Repository");
+import mongoose from "mongoose";
+import Repository from "../models/Repository.js";
 
 class RepositoriesHandler {
   static getRepositories({ userId, page = 1, pageSize = 5 }) {
@@ -66,4 +66,4 @@ class RepositoriesHandler {
   }
 }
 
-module.exports = RepositoriesHandler;
+export default RepositoriesHandler;

@@ -1,5 +1,5 @@
-const { default: mongoose } = require("mongoose");
-const UserRepoDetails = require("../models/UserRepoDetails");
+import mongoose from "mongoose";
+import UserRepoDetails from "../models/UserRepoDetails.js";
 
 class UserRepoHandler {
   static addNewRecord(repository) {
@@ -38,9 +38,15 @@ class UserRepoHandler {
     return UserRepoDetails.aggregatePaginate(repoDetailAggregate, { page, limit: pageSize });
   }
 
-  static getUserRepos({ page = 1, pageSize = 5 }) {
+  static getUserRepos({ page = 1, pageSize = 5, syncedUserId = '' }) {
     const repoDetailAggregate = UserRepoDetails.aggregate([
       {
+        $match: {
+          syncedUserId
+        },
+      },
+      {
+
         $lookup: {
           from: "repositories",
           let: { repoIdStr: "$repoId" }, 
@@ -69,4 +75,4 @@ class UserRepoHandler {
   }
 }
 
-module.exports = UserRepoHandler;
+export default UserRepoHandler;

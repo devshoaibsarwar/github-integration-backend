@@ -1,6 +1,6 @@
-const express = require("express");
-const RepositoryController = require("../controllers/repositories/RepositoryController.js");
-const Authentication = require("../middlewares/Authentication.js");
+import express from "express";
+import RepositoryController from "../controllers/repositories/RepositoryController.js";
+import Authentication from "../middlewares/Authentication.js";
 const router = express.Router();
 
 router.get(
@@ -11,4 +11,4 @@ router.get(
 router.put('/:id', Authentication.authenticate, RepositoryController.addRepositoriesDetail);
 router.get('/details', Authentication.authenticate, RepositoryController.fetchRepositoriesDetail);
 
-module.exports = router;
+export default router;

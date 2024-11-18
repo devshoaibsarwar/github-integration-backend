@@ -1,8 +1,8 @@
-const ErrorCodes = require("./errorCodes");
-const ErrorMessages = require("./erroMessages");
-const RepositoryEnum = require("./statusEnum");
+import ErrorCodes from "./errorCodes.js";
+import ErrorMessages from "./erroMessages.js";
+import RepositoryEnum from "./statusEnum.js";
 
-module.exports = {
+export {
   ErrorMessages,
   ErrorCodes,
   RepositoryEnum,

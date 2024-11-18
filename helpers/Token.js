@@ -1,5 +1,5 @@
-const jsonwebtoken = require("jsonwebtoken");
-const Crypotgraphy = require("./Cryptography");
+import jsonwebtoken from "jsonwebtoken";
+import Crypotgraphy from "./Cryptography.js";
 
 class Token {
   static getAccessToken(user) {
@@ -30,4 +30,4 @@ class Token {
   }
 }
 
-module.exports = Token;
+export default Token;

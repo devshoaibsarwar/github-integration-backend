@@ -1,4 +1,4 @@
-const crypto = require("crypto");
+import crypto from "crypto";
 
 class Crypotgraphy {
   static algorithm = "aes-256-cbc";
@@ -29,4 +29,4 @@ class Crypotgraphy {
   }
 }
 
-module.exports = Crypotgraphy;
+export default Crypotgraphy;

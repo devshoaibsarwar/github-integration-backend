@@ -1,8 +1,8 @@
-const {
+import {
   GithubIntegrationHandler,
   RepositoriesHandler,
   UserRepoHandler,
-} = require("../../handlers");
+} from "../../handlers/index.js";
 
 class GithubIntegrationManager {
   static getUser(user) {
@@ -12,7 +12,9 @@ class GithubIntegrationManager {
   }
 
   static async delete(user) {
-    const repositories = await RepositoriesHandler.getRepositoriesById(user.userId);
+    const repositories = await RepositoriesHandler.getRepositoriesById(
+      user.userId
+    );
     await RepositoriesHandler.deleteRepositoryByUserId(user.userId);
     for (const repository of repositories) {
       await UserRepoHandler.deleteRepository(repository._id);
@@ -21,4 +23,4 @@ class GithubIntegrationManager {
   }
 }
 
-module.exports = GithubIntegrationManager;
+export default GithubIntegrationManager;

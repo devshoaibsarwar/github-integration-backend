@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "axios";
 
 class ExternalAPI {
   static getRequest(url, params, headers) {
@@ -14,4 +14,4 @@ class ExternalAPI {
   }
 }
 
-module.exports = ExternalAPI;
+export default ExternalAPI;

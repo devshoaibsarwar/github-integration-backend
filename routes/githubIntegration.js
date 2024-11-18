@@ -1,6 +1,7 @@
-const express = require("express");
-const Authentication = require("../middlewares/Authentication");
-const GithubIntegrationController = require("../controllers/githubIntegration/GithubIntegrationController");
+import express from "express";
+import Authentication from "../middlewares/Authentication.js";
+import GithubIntegrationController from "../controllers/githubIntegration/GithubIntegrationController.js";
+
 const router = express.Router();
 
 router.get(
@@ -15,4 +16,4 @@ router.delete(
   GithubIntegrationController.deleteUserDetails
 );
 
-module.exports = router;
+export default router;

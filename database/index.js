@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 class MongoDbClient {
   static async connect() {
@@ -22,4 +22,4 @@ class MongoDbClient {
   }
 }
 
-module.exports = MongoDbClient;
+export default MongoDbClient;

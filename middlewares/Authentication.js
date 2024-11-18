@@ -1,8 +1,6 @@
-const { GithubIntegrationHandler } = require("../handlers");
-
-const { ErrorCodes, ErrorMessages } = require("../constants");
-
-const { Exception, Token, Crypotgraphy } = require("../helpers");
+import { GithubIntegrationHandler } from "../handlers/index.js";
+import { ErrorCodes, ErrorMessages } from "../constants/index.js";
+import { Exception, Token, Crypotgraphy } from "../helpers/index.js";
 
 class Authentication {
   static async authenticate(req, res, next) {
@@ -59,4 +57,4 @@ class Authentication {
   }
 }
 
-module.exports = Authentication;
+export default Authentication;

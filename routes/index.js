@@ -1,7 +1,7 @@
-const express = require("express");
-const authRoutes = require("./auth");
-const githubIntegrationRoutes = require("./githubIntegration");
-const repositoriesRoutes = require("./repositories");
+import express from "express";
+import authRoutes from "./auth.js";
+import githubIntegrationRoutes from "./githubIntegration.js";
+import repositoriesRoutes from "./repositories.js";
 
 const router = express.Router();
 
@@ -13,4 +13,4 @@ router.use("/v1/api/auth", authRoutes);
 router.use("/v1/api/github-integration", githubIntegrationRoutes);
 router.use("/v1/api/repositories", repositoriesRoutes);
 
-module.exports = router;
+export default router;

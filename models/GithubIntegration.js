@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const githubIntegrationSchema = mongoose.Schema(
   {
@@ -19,4 +19,4 @@ const githubIntegrationSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("github-integration", githubIntegrationSchema);
+export default mongoose.model("github-integration", githubIntegrationSchema);

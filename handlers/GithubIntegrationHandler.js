@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const GithubIntegration = require("../models/GithubIntegration");
+import mongoose from "mongoose";
+import GithubIntegration from "../models/GithubIntegration.js";
 
 class GithubIntegrationHandler {
   static addNewUser(user) {
@@ -22,4 +22,4 @@ class GithubIntegrationHandler {
   }
 }
 
-module.exports = GithubIntegrationHandler;
+export default GithubIntegrationHandler;
